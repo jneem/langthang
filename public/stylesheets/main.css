@@ -1,0 +1,51 @@
+html {
+	height: 100%;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#map-container {
+	height: 100%;
+	position: relative;
+}
+
+#map-canvas {
+	height: 100%;
+}
+
+#map-sidebar {
+	height: 100%;
+	width: 200px;
+	float: left;
+	overflow: auto;
+	border-right: 1px solid grey;
+}
+
+#map-bottom {
+	clear: both;
+}
+
+.sidebar-item {
+	width: 200px;
+	height: 3em;
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+	overflow: hidden;
+	border-bottom: 1px solid grey;
+	position: relative;
+}
+
+.sidebar-heading {
+	font-weight: bold;
+	font-size: 120%;
+	cursor: default;
+}
+
+.sidebar-subheading {
+	font-size: 90%;
+	cursor: default;
+}
