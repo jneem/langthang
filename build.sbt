@@ -1,4 +1,4 @@
-name := "slick-example"
+name := "langthang"
 
 version := "1.0-SNAPSHOT"
 
