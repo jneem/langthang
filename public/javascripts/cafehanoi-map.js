@@ -25,7 +25,6 @@ function sidebarId(id) {
 function sidebarImage(id) {
 	var imageName = id.toString() + "-180.jpg";
 	var imageUrl = jsRoutes.controllers.Assets.at("images/" + imageName).url;
-	console.log(imageUrl);
 	return "<div class=\"sidebar-image\">" +
 	  "<img alt=\"Preview image\" height=\"135\" width=\"180\" src=\"" + imageUrl + "\">" +
 	"</div>";
@@ -43,9 +42,7 @@ function activate(id) {
 	sb.attr("class", "sidebar-item-active");
 	
 	var photos = id2Place[id].photos;
-	console.log(photos.toString());
 	if (photos.length > 0) {
-	  console.log(sidebarImage(photos[0]));
       sb.append(sidebarImage(photos[0]));
 	}
 
