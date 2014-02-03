@@ -26,4 +26,13 @@ object Application extends Controller {
   def index = Action {
     Ok(views.html.index("Cafe Hanoi"))
   }
+
+  def jsRoutes = Action { implicit req: RequestHeader =>
+    import routes.javascript._
+    Ok(
+      Routes.javascriptRouter("jsRoutes")(
+        controllers.routes.javascript.Assets.at
+      )
+    ).as("text/javascript")
+  }
 }

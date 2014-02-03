@@ -16,11 +16,13 @@ object Places {
   case class Photo(id: Long)
 
   case class Place(
+    id: Long,
     name: String,
     loc: Location,
     photos: Iterable[Photo]) {
 
     def toJSON: JsValue = new JsObject(List(
+      "id" -> new JsNumber(id),
       "name" -> new JsString(name),
       "address" -> new JsString(loc.address),
       "latLng" -> loc.latLng.toJSON,
@@ -50,7 +52,7 @@ object Places {
 
   // Extract the Place from a PlacesRow and all the PhotosRows that reference it.
   private def row2Place(place: Tables.PlacesRow, photos: Iterable[Tables.PhotosRow]) =
-    Place(place.name, row2Location(place), photos map row2Photo)
+    Place(place.id, place.name, row2Location(place), photos map row2Photo)
 
   // Convert a query result into a list of Places.
   private def convert(xs: Iterable[QueryType]): Iterable[Place] = {

@@ -19,7 +19,7 @@ body {
 
 #map-sidebar {
 	height: 100%;
-	width: 200px;
+	width: 210px;
 	float: left;
 	overflow: auto;
 	border-right: 1px solid grey;
@@ -31,12 +31,37 @@ body {
 
 .sidebar-item {
 	width: 200px;
-	height: 3em;
-	margin-top: 0.5em;
-	margin-bottom: 0.5em;
+	padding: 5px;
 	overflow: hidden;
+	text-overflow: ellipsis;
 	border-bottom: 1px solid grey;
 	position: relative;
+	white-space: no-wrap;
+}
+
+.sidebar-item:hover {
+	background-color: #D0F0FF;
+}
+
+/* TODO: a good candidate for mixins, if we ever move to LESS */
+.sidebar-item-active {
+	width: 200px;
+	padding: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	border-bottom: 1px solid grey;
+	position: relative;
+	white-space: no-wrap;
+	background-color: #bbffcd;
+}
+
+.sidebar-item-active:hover {
+	background-color: #7ceadc;
+}
+
+.sidebar-image {
+	width: 180px;
+	margin: 10px auto;
 }
 
 .sidebar-heading {
