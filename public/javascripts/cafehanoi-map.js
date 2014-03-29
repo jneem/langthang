@@ -1,3 +1,8 @@
+// This file requires jquery and purl to be included before it.
+
+var url = $.url();
+var urlAttrs = url.attr();
+
 var SMALL_MARKER_URL = jsRoutes.controllers.Assets.at("images/marker-small.png").url;
 var LARGE_MARKER_URL = jsRoutes.controllers.Assets.at("images/marker-large.png").url;
 
@@ -62,14 +67,15 @@ function deactivate(id) {
 	activeId = null;
 }
 
-// Given the description of a place, put a marker on the map and add an
-// entry to the sidebar.
+// Given the descriptions of a bunch of places, put markers on the map and add
+// entries to the sidebar.
+// Finally, if the url params say that we should select a place, select it.
 function addPlaces(data) {
 	function addPlace(index, place) {
 		id2Place[place.id] = place;
 		
 		// Add the marker.
-		latLng = new google.maps.LatLng(place.latLng[0], place.latLng[1]);
+		var latLng = new google.maps.LatLng(place.latLng[0], place.latLng[1]);
 		var mark = new google.maps.Marker({
 			position : latLng,
 			map : map,
@@ -90,12 +96,38 @@ function addPlaces(data) {
         $("#" + sidebarId(place.id)).click(function() { activate(place.id); })
 	}
 	$.each(data, addPlace);
+	
+	console.log("Done adding places");
+	// Check if we are asked to select a place.
+	if ("sel" in url.param()) {
+		console.log("Selecting...");
+		var id = parseInt(url.param("sel"));
+		activate(id);
+	}
+}
+
+function stringToLatLng(str) {
+	components = str.split(",");
+	return new google.maps.LatLng(parseFloat(components[0]), parseFloat(components[1]));
 }
 
 function setLocation() {
-	if (navigator.geolocation) {
+	// If a location was passed in via a url param, use that.
+	if ("loc" in url.param()) {
+		var loc = stringToLatLng(url.param("loc"));
+		var zoom = STARTING_ZOOM;
+		
+		if ("zoom" in url.param()) {
+			zoom = parseInt(url.param("zoom"));
+		}
+		
+		map.setCenter(loc);
+		map.setZoom(zoom);
+
+	// Otherwise, try getting the user's current location.
+	} else if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(pos) {
-			loc = new google.maps.LatLng(pos.coords.latitude,
+			var loc = new google.maps.LatLng(pos.coords.latitude,
 					pos.coords.longitude);
 			map.setCenter(loc);
 			map.setZoom(STARTING_ZOOM);
